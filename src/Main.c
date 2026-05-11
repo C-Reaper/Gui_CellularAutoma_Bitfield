@@ -10,8 +10,8 @@
 #include "/home/codeleaded/System/Static/Container/Bitfield.h"
 
 
-#define WORLD_X			100
-#define WORLD_Y			100
+#define WORLD_X			1000U
+#define WORLD_Y			1000U
 
 #define WORLD_ERROR 	-1
 #define WORLD_INACTIVE	0
@@ -26,9 +26,9 @@ char World_Get(Bitfield* world,int x,int y){
 	if(x<0 || x>=WORLD_X || y<0 || y>=WORLD_Y) return WORLD_ERROR;
 	return Bitfield_Get(world,y * WORLD_X + x);
 }
-void World_Set(Bitfield* world,int x,int y,char c){
+void World_Set(Bitfield* world,int x,int y,Bit c){
 	if(x<0 || x>=WORLD_X || y<0 || y>=WORLD_Y) return;
-	Bitfield_Set(world,y * WORLD_X + x,c);
+	Bitfield_Set(world,c,y * WORLD_X + x);
 }
 char World_Get_N(Bitfield* world,int x,int y){
 	if(x<0 || x>=WORLD_X || y<0 || y>=WORLD_Y) return 0;
@@ -51,6 +51,9 @@ void Setup(AlxWindow* w){
 
 	world = Bitfield_New(WORLD_X * WORLD_Y);
 	world_target = Bitfield_New(WORLD_X * WORLD_Y);
+
+	Bitfield_Memset(&world,0);
+	Bitfield_Memset(&world_target,0);
 }
 void Update(AlxWindow* w){
 	tv.ZoomSpeed = (float)w->ElapsedTime;
